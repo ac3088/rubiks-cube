@@ -431,6 +431,10 @@ dFace.push(document.querySelector('#d6'));
 dFace.push(document.querySelector('#d7'));
 dFace.push(document.querySelector('#d8'));
 
+let GLOBAL_LOCK = false;
+let MOVE_DELAY = 50;
+let NUM_SCRAMBLE_MOVES = 20;
+
 function replaceSticker(sticker, colour) {
     const og = sticker.className;
     sticker.classList.replace(og, colour);
@@ -451,13 +455,43 @@ function renderCube(newCube) {
     replaceFace(dFace, newCube.d);
 }
 
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function scramble(n) {
+    GLOBAL_LOCK = true;
+    for (let i = 0; i < n; i++) {
+        cube.randomMove();
+        renderCube(cube);
+        await sleep(MOVE_DELAY);
+    }
+    GLOBAL_LOCK = false;
+}
+
+async function solve(n) {
+    GLOBAL_LOCK = true;
+    for (let i = 0; i < n; i++) {
+        cube.reverseLastMove();
+        renderCube(cube);
+        await sleep(MOVE_DELAY);
+    }
+    GLOBAL_LOCK = false;
+}
+
 const cube = new Cube();
+
+const infoDiv = document.getElementById('info');
 
 document.addEventListener('keypress', function (event) {
     const key = event.key;
-    const move = event.shiftKey ? key.toUpperCase() + "'" : key.toUpperCase();
-    cube.sequence([move]);
-    renderCube(cube);
+    const validKeys = ["u", "l", "f", "r", "b", "d"];
+    if (validKeys.includes(key)) {
+        const move = event.shiftKey ? key.toUpperCase() + "'" : key.toUpperCase();
+        cube.sequence([move]);
+        renderCube(cube);
+        infoDiv.innerHTML = "Last move: " + move;
+    }
 });
 
 const scrambleButton = document.getElementById('scramble-btn');
@@ -467,16 +501,18 @@ const reverseButton = document.getElementById('reverse-btn');
 const resetButton = document.getElementById('reset-btn');
 
 scrambleButton.addEventListener('click', () => {
-    for (let i = 0; i < 20; i++) {
-        cube.randomMove();
-        renderCube(cube);
+    if (!GLOBAL_LOCK) {
+        scramble(NUM_SCRAMBLE_MOVES);
+    } else {
+        console.log("Locked");
     }
 });
 solveButton.addEventListener('click', () => {
     const n = cube.prevMoves.length;
-    for (let i = 0; i < n; i++) {
-        cube.reverseLastMove();
-        renderCube(cube);
+    if (!GLOBAL_LOCK) {
+        solve(n);
+    } else {
+        console.log("Locked");
     }
 });
 randomMoveButton.addEventListener('click', () => {
@@ -490,6 +526,5 @@ reverseButton.addEventListener('click', () => {
 resetButton.addEventListener('click', () => {
     cube.reset();
     renderCube(cube);
+    infoDiv.innerHTML = "";
 });
-
-
