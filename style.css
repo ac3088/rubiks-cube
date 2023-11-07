@@ -1,0 +1,55 @@
+.face {
+    display: grid;
+    gap: 5px;
+    grid-template-columns: repeat(3, 100px);
+    grid-template-rows: repeat(3, 100px);
+    margin: 5px;
+    border-style: solid;
+}
+
+.fake-face {
+    display: grid;
+    gap: 5px;
+    grid-template-columns: repeat(3, 100px);
+    grid-template-rows: repeat(3, 100px);
+    margin: 5px;
+    border-style: solid;
+    border-color: darkgray;
+}
+
+#cube {
+    display: inline-block;
+}
+
+#button-list {
+    float: right;
+    list-style: none;
+}
+
+#button-list li {
+    margin: 10px;
+}
+
+.white {
+    background-color: whitesmoke;
+}
+
+.orange {
+    background-color: orange;
+}
+
+.green {
+    background-color: green;
+}
+
+.red {
+    background-color: red;
+}
+
+.blue {
+    background-color: blue;
+}
+
+.yellow {
+    background-color: yellow;
+}
