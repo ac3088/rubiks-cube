@@ -484,10 +484,10 @@ const cube = new Cube();
 const infoDiv = document.getElementById('info');
 
 document.addEventListener('keypress', function (event) {
-    const key = event.key;
-    const validKeys = ["u", "l", "f", "r", "b", "d"];
+    const key = event.key.toUpperCase();
+    const validKeys = ["U", "L", "F", "R", "B", "D"];
     if (validKeys.includes(key)) {
-        const move = event.shiftKey ? key.toUpperCase() + "'" : key.toUpperCase();
+        const move = event.shiftKey ? key + "'" : key;
         cube.sequence([move]);
         renderCube(cube);
         infoDiv.innerHTML = "Last move: " + move;
