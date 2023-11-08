@@ -19,6 +19,10 @@ const resetButton = document.getElementById('reset-btn');
 
 const cube = new Cube();
 
+/**
+ * Use this function when you want to lock the global lock before calling a certain function.
+ * @param {function} f The function to be called after the global lock has been locked.
+ */
 const lock = function (f) {
     if (!gLock) {
         gLock = true;
@@ -29,17 +33,31 @@ const lock = function (f) {
     }
 }
 
+/**
+ * Changes a sticker's colour by replacing its old class with a new class.
+ * @param {HTMLElement} sticker The sticker to be changed.
+ * @param {string} colour The colour to change it to.
+ */
 function replaceSticker(sticker, colour) {
     const og = sticker.className;
     sticker.classList.replace(og, colour);
 }
 
+/**
+ * Replaces all of the stickers in face with the colours in newFace.
+ * @param {string[]} face The face to be changed.
+ * @param {string[]} newFace A list of colours to replace the old face.
+ */
 function replaceFace(face, newFace) {
     for (let i = 0; i < 9; i++) {
         replaceSticker(face[i], newFace[i]);
     }
 }
 
+/**
+ * Re-renders the cube on the screen based on newCube.
+ * @param {Cube} newCube The cube to be rendered on the screen.
+ */
 function renderCube(newCube) {
     replaceFace(uFace, newCube.u);
     replaceFace(lFace, newCube.l);
@@ -61,6 +79,10 @@ document.addEventListener('keypress', function (event) {
     });
 });
 
+/**
+ * Performs n random moves on the cube and renders the moves on the screen.
+ * @param {*} n The number of random moves to be performed.
+ */
 function scramble(n) {
     for (let i = 0; i < n; i++) {
         let move = cube.getRandomMove();
@@ -73,6 +95,9 @@ scrambleButton.addEventListener('click', () => {
     lock(() => scramble(NUM_SCRAMBLE_MOVES));
 });
 
+/**
+ * Reverses moves on the cube and renders them until the cube is solved.
+ */
 function solve() {
     const n = cube.prevMoves.length;
     for (let i = 0; i < n; i++) {
@@ -90,7 +115,7 @@ reverseButton.addEventListener('click', () => {
     const move = cube.getReverseLastMove();
     lock(() => {
         cube.sequence([move], true);
-        renderCube();
+        renderCube(cube);
     })
 });
 
