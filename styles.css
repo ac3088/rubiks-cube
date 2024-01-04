@@ -31,6 +31,15 @@
     margin: 10px;
 }
 
+#move-btns {
+    margin-top: 50px;
+}
+
+.move-btn {
+    width: 100px;
+    height: 50px;
+}
+
 .info {
     text-align: center;
     vertical-align: middle;

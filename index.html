@@ -121,12 +121,21 @@
 
     <ul id="button-list">
         <li><button id="scramble-btn">Scramble!</button></li>
-        <li><button id="solve-btn">Solve! (Broken)</button></li>
         <li><button id="reverse-btn">Reverse Last Move</button></li>
         <li><button id="reset-btn">Reset the Cube</button></li>
     </ul>
 
-    <div class="info" id="info"></div>
+    <div id="move-btns">
+        <p>Use keyboard keys to move the cube or click the buttons below. Shift + {key} will move the face
+            anti-clockwise</p>
+        <p>(U = up face, L = left face, F = front face, etc)</p>
+        <button id="u-btn" class="move-btn">U</button>
+        <button id="l-btn" class="move-btn">L</button>
+        <button id="f-btn" class="move-btn">F</button>
+        <button id="r-btn" class="move-btn">R</button>
+        <button id="b-btn" class="move-btn">B</button>
+        <button id="d-btn" class="move-btn">D</button>
+    </div>
 
     <script type="module" src="./script.js"></script>
 </body>

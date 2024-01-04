@@ -11,11 +11,16 @@ const dFace = empty.map((_, i) => document.querySelector(`#d${i}`));
 const NUM_SCRAMBLE_MOVES = 20;
 let gLock = false;
 
-const infoDiv = document.getElementById('info');
 const scrambleButton = document.getElementById('scramble-btn');
-const solveButton = document.getElementById('solve-btn');
 const reverseButton = document.getElementById('reverse-btn');
 const resetButton = document.getElementById('reset-btn');
+
+const uButton = document.getElementById('u-btn');
+const lButton = document.getElementById('l-btn');
+const fButton = document.getElementById('f-btn');
+const rButton = document.getElementById('r-btn');
+const bButton = document.getElementById('b-btn');
+const dButton = document.getElementById('d-btn');
 
 const cube = new Cube();
 
@@ -95,22 +100,6 @@ scrambleButton.addEventListener('click', () => {
     lock(() => scramble(NUM_SCRAMBLE_MOVES));
 });
 
-/**
- * Reverses moves on the cube and renders them until the cube is solved.
- */
-function solve() {
-    const n = cube.prevMoves.length;
-    for (let i = 0; i < n; i++) {
-        let move = cube.getReverseLastMove();
-        cube.sequence([move], true);
-        renderCube(cube);
-    }
-}
-
-solveButton.addEventListener('click', () => {
-    lock(() => solve());
-});
-
 reverseButton.addEventListener('click', () => {
     const move = cube.getReverseLastMove();
     lock(() => {
@@ -122,6 +111,48 @@ reverseButton.addEventListener('click', () => {
 resetButton.addEventListener('click', () => {
     lock(() => {
         cube.reset();
+        renderCube(cube);
+    })
+});
+
+uButton.addEventListener('click', () => {
+    lock(() => {
+        cube.U(1);
+        renderCube(cube);
+    })
+})
+
+lButton.addEventListener('click', () => {
+    lock(() => {
+        cube.L(1);
+        renderCube(cube);
+    })
+});
+
+fButton.addEventListener('click', () => {
+    lock(() => {
+        cube.F(1);
+        renderCube(cube);
+    })
+});
+
+rButton.addEventListener('click', () => {
+    lock(() => {
+        cube.R(1);
+        renderCube(cube);
+    })
+});
+
+bButton.addEventListener('click', () => {
+    lock(() => {
+        cube.B(1);
+        renderCube(cube);
+    })
+});
+
+dButton.addEventListener('click', () => {
+    lock(() => {
+        cube.D(1);
         renderCube(cube);
     })
 });
